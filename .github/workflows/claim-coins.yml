@@ -1,0 +1,24 @@
+name: Claim HTV Coins
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'  # every 3 hours
+  workflow_dispatch:       # allows manual trigger
+
+jobs:
+  claim:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Run HTV coin script
+        run: npm start
+        env:
+          HTV_EMAIL: ${{ secrets.HTV_EMAIL }}
+          HTV_PASSWORD: ${{ secrets.HTV_PASSWORD }}
